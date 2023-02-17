@@ -4,9 +4,11 @@
 package server
 
 import (
+	"github.com/maxicapodacqua/nearby/internal/configuration"
 	"github.com/maxicapodacqua/nearby/internal/router"
 	"log"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -25,21 +27,19 @@ func configureRoute(path string, handler router.HandlerFunc) {
 // Start
 // Initializes the Web API with all its routes
 func Start() {
-	// Adds microseconds to logger
-	log.Default().SetFlags(log.LstdFlags | log.Lmicroseconds)
 	log.Printf("Starting server \n")
 
 	configureRoute(router.Ping())
 	configureRoute(router.Health())
 
-	log.Printf("Server started\n")
 	s := &http.Server{
-		Addr:           ":8080",
+		Addr:           ":" + os.Getenv(configuration.Port),
 		Handler:        nil,
 		ReadTimeout:    10 * time.Second,
 		WriteTimeout:   10 * time.Second,
 		MaxHeaderBytes: 1 << 20,
 		ErrorLog:       log.Default(),
 	}
+	log.Printf("Server started at %v \n", s.Addr)
 	log.Fatal(s.ListenAndServe())
 }
