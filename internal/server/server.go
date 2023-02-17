@@ -1,10 +1,10 @@
 // Package server
-// Defines configuration and starting point
+// Defines config and starting point
 // for the Web API
 package server
 
 import (
-	"github.com/maxicapodacqua/nearby/internal/configuration"
+	"github.com/maxicapodacqua/nearby/internal/config"
 	"github.com/maxicapodacqua/nearby/internal/router"
 	"log"
 	"net/http"
@@ -33,7 +33,7 @@ func Start() {
 	configureRoute(router.Health())
 
 	s := &http.Server{
-		Addr:           ":" + os.Getenv(configuration.Port),
+		Addr:           ":" + os.Getenv(config.Port),
 		Handler:        nil,
 		ReadTimeout:    10 * time.Second,
 		WriteTimeout:   10 * time.Second,

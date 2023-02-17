@@ -1,7 +1,8 @@
-// Package configuration
-// Manages general app configuration, mostly based in environment variables
-// and holds constants to access them
-package configuration
+// Package config
+// Manages general app config, mostly based in environment
+// variables and holds constants to access them. To access config variables in
+// this project you have to use os.GetEnv
+package config
 
 import (
 	"log"
@@ -20,6 +21,9 @@ func setDefault(key, val string) {
 	}
 }
 
+// SetWithDefaults
+// Initializes the configuration of the project as environment variables
+// All config vars are accessed using os.GetEnv
 func SetWithDefaults() {
 	if _, ok := os.LookupEnv(Port); !ok {
 		setDefault(Port, DefaultPort)
