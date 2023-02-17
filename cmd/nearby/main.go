@@ -1,8 +1,14 @@
 package main
 
-import "fmt"
+import (
+	"log"
+	"net/http"
+)
 
 func main() {
+	http.HandleFunc("/ping", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("Hola"))
+	})
 
-	fmt.Printf("Hola!\n")
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
