@@ -13,11 +13,7 @@ type PingResponse struct {
 // Returns success as long as the web API is running
 func Ping() (path string, handler HandlerFunc) {
 	return "/ping", func(w http.ResponseWriter, r *http.Request) error {
-		resp := GeneralResponse[PingResponse]{
-			Data: PingResponse{
-				Pong: "success",
-			},
-		}
+		resp := NewResponse(PingResponse{Pong: "success"})
 
 		rMarshal, err := json.Marshal(resp)
 		if err != nil {

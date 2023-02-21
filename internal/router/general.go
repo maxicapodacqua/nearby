@@ -13,3 +13,7 @@ type HandlerFunc func(w http.ResponseWriter, r *http.Request) error
 type GeneralResponse[T any] struct {
 	Data T `json:"data"`
 }
+
+func NewResponse[T any](dataStruct T) GeneralResponse[T] {
+	return GeneralResponse[T]{Data: dataStruct}
+}

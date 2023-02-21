@@ -40,7 +40,7 @@ func Start() {
 		Handler:        nil,
 		ReadTimeout:    10 * time.Second,
 		WriteTimeout:   10 * time.Second,
-		MaxHeaderBytes: 1 << 20,
+		MaxHeaderBytes: http.DefaultMaxHeaderBytes,
 		ErrorLog:       log.Default(),
 	}
 	log.Printf("Server started at %v \n", s.Addr)

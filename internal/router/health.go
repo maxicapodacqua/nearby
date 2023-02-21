@@ -14,7 +14,7 @@ type HealthResponse struct {
 // Checks if API connections are okay
 func Health(db *sql.DB) (path string, handler HandlerFunc) {
 	return "/health", func(w http.ResponseWriter, r *http.Request) error {
-		resp := GeneralResponse[HealthResponse]{Data: HealthResponse{Database: "healthy"}}
+		resp := NewResponse(HealthResponse{Database: "healthy"})
 		dbErr := db.PingContext(r.Context())
 		if dbErr != nil {
 			w.WriteHeader(500)
