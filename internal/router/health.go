@@ -17,6 +17,7 @@ func Health() (path string, handler HandlerFunc) {
 	return "/health", func(w http.ResponseWriter, r *http.Request) error {
 
 		db := sqlite.Connect()
+		defer db.Close()
 		log.Printf("DB connection: %+v", db)
 
 		w.WriteHeader(500)
