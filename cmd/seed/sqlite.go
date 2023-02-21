@@ -1,3 +1,5 @@
+// Creates the needed tables for the sqlite database
+// and inserts data
 package main
 
 import (
@@ -33,6 +35,12 @@ func main() {
 	check(err)
 	rowsAf, _ := r.RowsAffected()
 	log.Printf("Rows affected: %v", rowsAf)
+
+	var count int
+	err = db.QueryRow("SELECT count(*) FROM `nearby_area_codes`").Scan(&count)
+	check(err)
+
+	log.Printf("Return count from select: %v\n", count)
 
 	log.Println("End seed process")
 }
