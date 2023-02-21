@@ -9,11 +9,9 @@ import (
 )
 
 func Connect() *sql.DB {
+	log.Printf("Connecting to sqlite database\n")
 	db, err := sql.Open("sqlite", os.Getenv(config.SQLiteDNS))
 	if err != nil {
-		log.Fatal(err)
-	}
-	if err := db.Ping(); err != nil {
 		log.Fatal(err)
 	}
 	return db

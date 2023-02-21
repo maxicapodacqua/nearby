@@ -5,6 +5,7 @@ package server
 
 import (
 	"github.com/maxicapodacqua/nearby/internal/config"
+	"github.com/maxicapodacqua/nearby/internal/database/sqlite"
 	"github.com/maxicapodacqua/nearby/internal/router"
 	"log"
 	"net/http"
@@ -27,10 +28,12 @@ func configureRoute(path string, handler router.HandlerFunc) {
 // Start
 // Initializes the Web API with all its routes
 func Start() {
-	log.Printf("Starting server \n")
+	log.Printf("Starting server\n")
+
+	db := sqlite.Connect()
 
 	configureRoute(router.Ping())
-	configureRoute(router.Health())
+	configureRoute(router.Health(db))
 
 	s := &http.Server{
 		Addr:           ":" + os.Getenv(config.Port),

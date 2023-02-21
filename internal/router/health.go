@@ -1,9 +1,8 @@
 package router
 
 import (
-	"errors"
-	"github.com/maxicapodacqua/nearby/internal/database/sqlite"
-	"log"
+	"database/sql"
+	"encoding/json"
 	"net/http"
 )
 
@@ -13,14 +12,17 @@ type HealthResponse struct {
 
 // Health
 // Checks if API connections are okay
-func Health() (path string, handler HandlerFunc) {
+func Health(db *sql.DB) (path string, handler HandlerFunc) {
 	return "/health", func(w http.ResponseWriter, r *http.Request) error {
+		resp := GeneralResponse[HealthResponse]{Data: HealthResponse{Database: "healthy"}}
+		dbErr := db.PingContext(r.Context())
+		if dbErr != nil {
+			w.WriteHeader(500)
+			resp.Data.Database = "unhealthy"
+		}
+		rMarshal, _ := json.Marshal(resp)
+		_, _ = w.Write(rMarshal)
 
-		db := sqlite.Connect()
-		defer db.Close()
-		log.Printf("DB connection: %+v", db)
-
-		w.WriteHeader(500)
-		return errors.New("unimplemented")
+		return dbErr
 	}
 }
