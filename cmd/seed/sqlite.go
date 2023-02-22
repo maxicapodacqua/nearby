@@ -3,6 +3,7 @@
 package main
 
 import (
+	"github.com/maxicapodacqua/nearby/internal/config"
 	"github.com/maxicapodacqua/nearby/internal/database/sqlite"
 	"log"
 	"os"
@@ -16,6 +17,7 @@ func check(e error) {
 func main() {
 
 	log.Println("Starting seed process")
+	config.SetWithDefaults()
 	db := sqlite.Connect()
 
 	log.Println("Ping database")

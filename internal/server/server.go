@@ -34,6 +34,7 @@ func Start() {
 
 	configureRoute(router.Ping())
 	configureRoute(router.Health(db))
+	configureRoute(router.Nearby(db))
 
 	s := &http.Server{
 		Addr:           ":" + os.Getenv(config.Port),
