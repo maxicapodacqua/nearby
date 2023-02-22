@@ -2,9 +2,13 @@ package router
 
 import (
 	"database/sql"
-	"log"
+	"encoding/json"
 	"net/http"
 )
+
+type NearbyResponse struct {
+	AreaCodes []int `json:"area_codes"`
+}
 
 func Nearby(db *sql.DB) (path string, handler HandlerFunc) {
 	return "/nearby", func(w http.ResponseWriter, r *http.Request) error {
@@ -17,13 +21,24 @@ func Nearby(db *sql.DB) (path string, handler HandlerFunc) {
 			return err
 		}
 		defer rows.Close()
+
+		resp := NearbyResponse{AreaCodes: []int{}}
+
 		for rows.Next() {
-			var stub interface{}
-			if err := rows.Scan(&stub); err != nil {
+			var areaCode int
+			if err := rows.Scan(&areaCode); err != nil {
 				w.WriteHeader(500)
 				return err
 			}
-			log.Printf("%+v", stub)
+			resp.AreaCodes = append(resp.AreaCodes, areaCode)
+		}
+		rMarshal, err := json.Marshal(NewResponse(resp))
+		if err != nil {
+			return err
+		}
+
+		if _, err = w.Write(rMarshal); err != nil {
+			return err
 		}
 		return nil
 	}
