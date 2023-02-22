@@ -14,5 +14,5 @@ The idea is to work on a project from a scratch to get familiar with the golang 
 - [x] Connect to a database
 - [ ] Add unit tests
 - [ ] Implement repository pattern
-- [ ] Define/implement endpoints
+- [x] Define/implement endpoints
 - [ ] Add auto generated swagger doc?

@@ -10,10 +10,11 @@ import (
 )
 
 const (
-	Port             = "PORT"
-	DefaultPort      = "8080"
-	DefaultSQLiteDNS = "data/db.sqlite"
+	Port        = "PORT"
+	DefaultPort = "8080"
+
 	SQLiteDNS        = "SQLITE_DNS"
+	DefaultSQLiteDNS = "data/db.sqlite"
 )
 
 func setDefault(key, val string) {

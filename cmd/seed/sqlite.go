@@ -24,10 +24,8 @@ func main() {
 	check(db.Ping())
 
 	log.Println("Creating table")
-	schemaF, err := os.ReadFile("data/schema.sql")
-	check(err)
 
-	_, err = db.Exec(string(schemaF))
+	err := sqlite.StartSchema(db, "data/schema.sql")
 	check(err)
 
 	log.Println("Inserting data in fresh table")

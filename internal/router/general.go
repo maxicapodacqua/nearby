@@ -10,10 +10,19 @@ import "net/http"
 // We return an error to bubble up the failure to a top level middleware
 type HandlerFunc func(w http.ResponseWriter, r *http.Request) error
 
-type GeneralResponse[T any] struct {
-	Data T `json:"data"`
+type GeneralResponse[T interface{}] struct {
+	Data  T       `json:"data"`
+	Error *string `json:"error"`
 }
 
-func NewResponse[T any](dataStruct T) GeneralResponse[T] {
+func NewResponse[T interface{}](dataStruct T) GeneralResponse[T] {
 	return GeneralResponse[T]{Data: dataStruct}
+}
+
+func NewErrorResponse(err error) GeneralResponse[interface{}] {
+	str := err.Error()
+	return GeneralResponse[interface{}]{
+		Data:  nil,
+		Error: &str,
+	}
 }
