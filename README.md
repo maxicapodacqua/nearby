@@ -16,3 +16,44 @@ The idea is to work on a project from a scratch to get familiar with the golang 
 - [ ] Implement repository pattern
 - [x] Define/implement endpoints
 - [ ] Add auto generated swagger doc?
+
+## Documentation
+### Start project
+Install all needed components with go get:
+```shell
+go get ./...
+```
+### Commands
+Currently, this project has two different commands, 
+one to start the API and another one to seed the API.
+#### API
+To start the API run:
+```shell
+go run cmd/nearby/main.go
+```
+This should start the API in port 8080, if you want to change the
+port use set the environment var `PORT` to you desired port
+
+##### Environment variables
+* `PORT`: Changes the port where the API will run (default: `8080`)
+* `SQLITE_DNS`: DNS to connect to a database (default: `data/db.sqlite`)
+
+#### Seed
+To run the database seeder:
+```shell
+go run cmd/seed/sqlite.go
+```
+This will insert rows in the only SQL table used by the API `nearby_area_codes`.
+Currently, it searches for a `.sql` file called `./data/data.sql`.
+The file should contain the `INSERT` statements to seed your database.
+For example:
+```sql
+INSERT INTO `nearby_area_codes` VALUES (1,360,564)
+```
+For more information on the database schema check `data/schema.sql`
+
+### Test
+Run project tests with:
+```shell
+go test ./...
+```
