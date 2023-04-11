@@ -1,6 +1,6 @@
 module github.com/maxicapodacqua/nearby
 
-go 1.18
+go 1.20
 
 require modernc.org/sqlite v1.20.4
 
