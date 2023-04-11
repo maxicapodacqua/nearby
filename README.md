@@ -12,7 +12,7 @@ The idea is to work on a project from a scratch to get familiar with the golang 
 
 ## Tasks:
 - [x] Connect to a database
-- [ ] Add unit tests
+- [x] Add unit tests
 - [ ] Implement repository pattern
 - [x] Define/implement endpoints
 - [ ] Add auto generated swagger doc?

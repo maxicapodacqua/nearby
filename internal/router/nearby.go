@@ -17,7 +17,6 @@ var ErrInvalidAreaCode = errors.New("invalid value for `area_code`, value must b
 func Nearby(db *sql.DB) (path string, handler HandlerFunc) {
 	return "/nearby", func(w http.ResponseWriter, r *http.Request) error {
 
-		// TODO implement endpoint when area code is not provided, maybe return all values?
 		qsInput := r.URL.Query().Get("area_code")
 		areaCode, err := strconv.Atoi(qsInput)
 		if err != nil {
