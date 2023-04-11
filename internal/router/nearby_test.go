@@ -8,7 +8,6 @@ import (
 	"github.com/maxicapodacqua/nearby/internal/database/sqlite"
 	"io"
 	"net/http/httptest"
-	"reflect"
 	"strings"
 	"testing"
 )
@@ -115,15 +114,10 @@ func TestNearby(t *testing.T) {
 
 			// if status is not a server error, we should expect a response body
 			if tt.wantStatus < 500 {
-				gotBody, _ := io.ReadAll(result.Body)
-				var gotResponse GeneralResponse[NearbyResponse]
-				if err := json.Unmarshal(gotBody, &gotResponse); err != nil {
-					t.Errorf("Cannot parse response %v error %v", string(gotBody), err)
-				}
-
-				// TODO fix this logic so it checks for actual values instead of pointers
-				if !reflect.DeepEqual(tt.wantResponse, gotResponse) {
-					t.Errorf("Nearby() gotResponse = %v, want %v", gotResponse, tt.wantResponse)
+				gotResponse, _ := io.ReadAll(result.Body)
+				wantResponseJSON, _ := json.Marshal(tt.wantResponse)
+				if string(gotResponse) != string(wantResponseJSON) {
+					t.Errorf("Nearby() gotResponse = %v, want %v", gotResponse, wantResponseJSON)
 				}
 			}
 
