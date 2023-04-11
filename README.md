@@ -57,3 +57,18 @@ Run project tests with:
 ```shell
 go test ./...
 ```
+
+
+### Docker
+You can build and run this project as a docker container.
+First you need to build the docker image:
+```shell
+docker build -t nearby-api .
+```
+
+And then run it in the exposed port:
+```shell
+docker run -p 8080:8080 nearby-api:latest
+```
+
+This will run the project in localhost:8080
