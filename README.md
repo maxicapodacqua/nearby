@@ -61,6 +61,9 @@ go test ./...
 
 ### Docker
 You can build and run this project as a docker container.
+
+**Make sure you already have your `./data/data.sql` file in place before building the image**
+
 First you need to build the docker image:
 ```shell
 docker build -t nearby-api .
