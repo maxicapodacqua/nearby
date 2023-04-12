@@ -58,7 +58,11 @@ Run project tests with:
 go test ./...
 ```
 
-
+### Generate swagger doc
+This project uses https://github.com/swaggo/swag to generate swagger file
+```shell
+swag init -g cmd/nearby/main.go --ot yaml -o api/
+```
 ### Docker
 You can build and run this project as a docker container.
 

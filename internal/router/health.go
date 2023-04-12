@@ -11,7 +11,13 @@ type HealthResponse struct {
 }
 
 // Health
-// Checks if API connections are okay
+// @Summary Checks if the API is healthy
+// @Produce json
+// @Tags			system
+// @Accept			json
+// @Success 200 {object} GeneralResponse[HealthResponse] "API status"
+// @Failure	500	{object} GeneralResponse[HealthResponse] "Server error, likely database is down"
+// @Router			/health [get]
 func Health(db *sql.DB) (path string, handler HandlerFunc) {
 	return "/health", func(w http.ResponseWriter, r *http.Request) error {
 		resp := NewResponse(HealthResponse{Database: "healthy"})

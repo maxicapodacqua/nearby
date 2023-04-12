@@ -1,0 +1,119 @@
+basePath: /
+definitions:
+  router.GeneralResponse-router_HealthResponse:
+    properties:
+      data:
+        $ref: '#/definitions/router.HealthResponse'
+      error:
+        type: string
+    type: object
+  router.GeneralResponse-router_NearbyResponse:
+    properties:
+      data:
+        $ref: '#/definitions/router.NearbyResponse'
+      error:
+        type: string
+    type: object
+  router.GeneralResponse-router_PingResponse:
+    properties:
+      data:
+        $ref: '#/definitions/router.PingResponse'
+      error:
+        type: string
+    type: object
+  router.GeneralResponse-string:
+    properties:
+      data:
+        type: string
+      error:
+        type: string
+    type: object
+  router.HealthResponse:
+    properties:
+      database:
+        type: string
+    type: object
+  router.NearbyResponse:
+    properties:
+      area_codes:
+        items:
+          type: integer
+        type: array
+    type: object
+  router.PingResponse:
+    properties:
+      pong:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Nearby API, to search nearby phone area codes
+  title: Nearby API
+  version: "1.0"
+paths:
+  /health:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: API status
+          schema:
+            $ref: '#/definitions/router.GeneralResponse-router_HealthResponse'
+        "500":
+          description: Server error, likely database is down
+          schema:
+            $ref: '#/definitions/router.GeneralResponse-router_HealthResponse'
+      summary: Checks if the API is healthy
+      tags:
+      - system
+  /nearby:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Area code to search for nearby values
+        in: query
+        name: area_code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of nearby area codes
+          schema:
+            $ref: '#/definitions/router.GeneralResponse-router_NearbyResponse'
+        "422":
+          description: Invalid area code sent
+          schema:
+            $ref: '#/definitions/router.GeneralResponse-string'
+        "500":
+          description: Server error, likely database is down
+          schema:
+            $ref: '#/definitions/router.GeneralResponse-string'
+      summary: Returns a list of nearby area codes based on the input
+      tags:
+      - nearby
+  /ping:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Pong if the API is running
+          schema:
+            $ref: '#/definitions/router.GeneralResponse-router_PingResponse'
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/router.GeneralResponse-string'
+      summary: Returns success as long as the web API is running
+      tags:
+      - system
+swagger: "2.0"
